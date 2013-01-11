@@ -1,0 +1,61 @@
+<div class="division">
+    <table cellspacing="0" cellpadding="0" border="0">
+      
+      <tbody>
+      <tr>
+        <th style="width: 80px;">商品总额：</th>
+        <td>
+         ${order.goods_amount?string("currency")}
+        </td>
+      </tr>
+      
+      <tr>
+        <th style="width: 80px;">配送费用：</th>
+        
+        <td style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+        
+        <span id="order_shipmoney_span" price="${order.shipping_amount}">
+        	${order.shipping_amount?string("currency")}
+        </span>
+        
+        
+       
+        
+        <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+         >
+        <@permssion actid="customer_service,order"> 
+         
+        	<a href="javascript:;" id="editShipMoneyBtn" style="font-size:12px">修改</a>
+      
+        </@permssion>
+        </#if>
+        </td>
+      </tr>
+                      
+       <tr>
+        <th style="width: 80px;">订单总额：</th>
+        <td style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+        <span id="order_price_span" price="${order.order_amount}">
+          ${order.order_amount?string("currency")}
+        </span>
+        
+       
+        <#if order.status==  ORDER_NOT_PAY>
+       <@permssion actid="customer_service,order"> 
+       	 <a href="javascript:;" id="editPriceBtn" style="font-size:12px">修改</a>
+       </@permssion>
+        </#if>
+        
+        
+        </td>
+      </tr>
+      <tr>
+        <th style="width: 80px;">已支付金额：</th>
+        <td>
+        ${order.paymoney?string("currency")}
+        </td>
+      </tr> 
+      </tbody>
+      </table>
+</div>

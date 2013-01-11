@@ -1,0 +1,146 @@
+﻿<#assign permssion = "com.enation.app.base.core.directive.PermssionDirective"?new()>
+<#assign dateformat="com.enation.framework.directive.DateformateDirective"?new()>
+<script type="text/javascript" src="${ctx}/resource/com/enation/app/shop/component/ordercore/plugin/base/base.js"></script>
+<#if itemList?exists >
+<div class="grid">
+      <table cellspacing="0" cellpadding="0" border="0" width="100%"  >
+        <thead>
+        <tr>
+        <td style="white-space: normal; text-align: left;" colspan="6">
+         	<strong>订单号：${order.sn }</strong>
+         </td>
+        </tr>
+        
+        <tr>
+          <th  style="width:10%;">货号  </th>
+          <th  style="width:30%;">订单商品 (购买量)  </th>
+           <th  style="width:15%;">价格  </th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        <#list itemList  as item>
+       
+         <tr>
+         
+         <td style="white-space: normal; text-align: left;">
+         	${item.sn }
+         </td>
+         
+          <td style="white-space: normal; text-align: left;">
+          <a target="_blank" href="../goods-${item.goods_id }.html">${item.name }
+          </a><!-- 李改：去了两点 -->
+          <span class="fontcolorOrange fontbold">×(${item.num })</span>
+          <!-- 订单项扩展信息，如规格等 -->
+          ${item.other!''}
+ 
+
+
+
+          
+        
+        </tr>
+		</#list>
+         </tbody>
+      </table>
+</div>
+</#if>
+
+
+
+<div class="tableform" >
+
+<div class="box">
+	<h5>订单价格</h5>
+	<#include 'price.html' />
+</div>
+
+<div class="box">
+	<h5>订单其它信息</h5>
+	<#include 'other.html' />
+</div>
+
+<div class="box">
+ 	<h5>会员信息</h5>
+		
+	<#if member?exists>
+		<#include 'member.html' />
+	<#else>
+		非会员购买	
+	</#if>
+</div>
+
+
+
+
+<#if order.status ==ORDER_CANCELLATION>
+<div class="box">
+<div class="division" style="height:100px">
+<h5>订单取消原因</h5>
+${order.cancel_reason}
+</div>
+</div>
+</#if>
+
+ 
+
+<div class="box" style="width:400px">
+	<h5>特殊处理</h5>
+	<div class="division">
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tbody>
+      <tr>
+        <th style="width: 80px;">特殊处理：</th>
+        <td>
+        <textarea style="height:50px;width:100%;" id="admin_remark" >${order.admin_remark!''}</textarea>
+        <input type="hidden" id="admin_order_id"  value="${order.order_id}" />
+        </td>
+      </tr>
+      <tr>
+        <td conspan="2" align="center"><input type="button" id="submitbtn" value="保存"></td>
+      </tr>
+    </tbody>
+    </table>
+</div>
+</div>
+
+
+
+<div style="clear: both"> 
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+$(function(){
+	var oid = $("#admin_order_id").val();
+	$("#submitbtn").click(function(){
+		var  rk =$("#admin_remark").val();
+		$.ajax({
+			type:"POST",
+			url:basePath+"order!saveAdminRemark.do?ajax=yes&orderId="+ oid +"&remark=" + rk,
+			dataType:"json",
+			success:function(result){
+				if(result.result==0){
+					alert("特殊处理保存完成");
+				}else{
+					alert("异步保存 失败:"+result.message);
+				}
+			},
+			error:function(){
+				alert("异步失败");
+			}
+		});
+	});
+});
+function showRogInfo(logino,logicode){
+	var content = "<div id='store_box'>";
+	content+="<div style='height:500px;overflow:auto;margin-top:5px;margin-left:10px' id='store_content'></div></div>";
+	$("body").append(content);
+	Eop.Dialog.init({id:"store_box",modal:true,title:"查询货运状态",width:"570px",height:"380px",remove:true});
+	Eop.Dialog.open("store_box");
+	var self = this;
+ 	$("#store_content").load('/widget.do?type=kuaidi&ajax=yes&logino='+logino+'&code='+logicode,function(){});
+}
+</script>

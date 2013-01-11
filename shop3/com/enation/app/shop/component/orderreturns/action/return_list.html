@@ -1,0 +1,49 @@
+<#assign grid=JspTaglibs["/WEB-INF/grid.tld"]>
+<#assign dateformat="com.enation.framework.directive.DateformateDirective"?new()>
+<div class="grid">
+<form method="POST" >
+<@grid.grid from="webpage">
+	<@grid.header>
+		<@grid.cell>订单号</@grid.cell>
+		<@grid.cell>会员名</@grid.cell>
+		<@grid.cell>状态</@grid.cell> 
+		<@grid.cell>类型</@grid.cell> 
+		<@grid.cell>申请日期</@grid.cell> 
+		<@grid.cell>操作</@grid.cell> 
+	</@grid.header>
+  	<@grid.body item="returnOrder">
+        <@grid.cell>${returnOrder.ordersn}</@grid.cell>
+        <@grid.cell>${returnOrder.membername}</@grid.cell>
+        <@grid.cell>
+        <#if returnOrder.state==0>未处理</#if>
+        <#if returnOrder.state==1>
+			<#if returnOrder.type ==1>退货已拒绝</#if>
+		    <#if returnOrder.type ==2>换货已拒绝</#if>
+		 </#if>
+        <#if returnOrder.state==2>
+			<#if returnOrder.type ==1>退货申请审核通过，等待客户将货品退回</#if>
+		    <#if returnOrder.type ==2>换货申请审核通过，等待客户将货品退回</#if>
+		</#if>
+        <#if returnOrder.state==3>
+			<#if returnOrder.type ==1>客户退回货品已收到，等待退款</#if>
+		    <#if returnOrder.type ==2>换货已收货，新货已发出</#if>
+		</#if>
+        <#if returnOrder.state==4>
+		<#if returnOrder.type ==1>退货流程完成</#if>
+		    <#if returnOrder.type ==2>换货流程完成</#if>
+		</#if>
+        </@grid.cell>
+        <@grid.cell>
+        	<#if returnOrder.type ==1>退货</#if>
+		    <#if returnOrder.type ==2>换货</#if>
+        </@grid.cell>
+        <@grid.cell><@dateformat pattern="yyyy-MM-dd hh:mm:ss" time="${(returnOrder.add_time*1000)?c}" />
+
+        </@grid.cell>
+        <@grid.cell> 
+	        <a  title="退货单操作" href="returnOrder!returnDetail.do?returnOrderId=${returnOrder.id}&returnOrderStatus=${returnOrder.state}"><img class="modify" src="images/transparent.gif"></a>
+         </@grid.cell> 
+ 	 </@grid.body>  
+</@grid.grid>  
+</form>	
+</div>

@@ -1,0 +1,8 @@
+<script type="text/javascript">
+$(function(){
+	$(".member_detail .tab li[tabid=5]").click(function(){
+		$("#order_wrapper").load("${ctx}/admin/plugin?beanid=memberOrderListPlugin&memberid=${memberid}",{cache:true});
+	});
+});
+</script>
+<div id="order_wrapper">加载中...</div>

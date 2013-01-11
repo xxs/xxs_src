@@ -1,0 +1,35 @@
+<div class="tableform" >
+<div class="box">
+	<div class="division">
+	
+	<#if receipt?exists >
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tbody>
+      <tr>
+        <th style="width: 80px;">发票抬头：</th>
+        <td>
+        ${receipt.title!''}
+        </td>
+      </tr>
+
+  	<tr>
+        <th style="width: 80px;">发票内容 ：</th>
+        <td>
+          ${receipt.content!''}
+        </td>
+      </tr>
+            
+      </tbody>
+      </table>
+      
+      <#else>
+		未索取发票    	
+      </#if>
+      
+	</div>
+</div>
+
+
+<div style="clear: both"> 
+</div>
+</div>

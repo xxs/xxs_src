@@ -1,0 +1,151 @@
+<#assign RegionSelect= "com.enation.app.base.component.widget.regions.RegionSelectDirective"?new()>
+<div class="input">
+<form class="validate" id="editMemberForm">
+<input type="hidden" name="member.member_id" value="${memberid }">
+<div class="main-div">
+<table cellspacing="1" cellpadding="3" width="100%" class="form-table">
+	<tr>
+		<td class="label" style="text-align: right;width:250px"><label class="text">用户名：</label>
+		</td>
+		<td valign="middle">${member.uname!''}</td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">姓名：</label>
+		</td>
+		<td valign="middle">&nbsp; 
+		<input type="text" name="member.name" value="${member.name!''}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">性别：</label>
+		</td>
+		<td valign="middle">&nbsp; <select name="member.sex">
+			<option value="-1">&nbsp;</option>
+			<option value="0" <#if member.sex == 0 >selected</#if>>
+			女</option>
+			<option value="1" <#if member.sex == 1 >selected</#if>>
+			男</option>
+
+		</select></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">出生日期：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="birthday" value="<#if member.birthday?exists ><@dateformat pattern="yyyy-MM-dd HH:mm:ss" time="${member.birthday?c }" /><#else>1970-01-01</#if>" maxlength="60" dataType="date" isrequired="true" class="dateinput"/></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">Email：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.email" value="${member.email!''}" id="email" dataType="email" />
+		</td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">固定电话：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.tel" value="${member.tel!''}" /></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">移动电话：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.mobile" value="${member.mobile!''}" /></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">会员等级：</label>
+		</td>
+		<td valign="middle">&nbsp; 
+		<select name="member.lv_id">
+			<option value="0">--选择等级--</option>
+			 
+			<#if lvlist?exists >
+				<#list lvlist as lv>
+				<option value="${lv.lv_id }" <#if lv.lv_id == member.lv_id   >selected</#if>>${lv.name }</option>
+				</#list>
+			</#if>	
+		 
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">邮编：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.zip" d="zip" value="${member.zip!''}" style="width: 70px" dataType="post_code"/></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">地区：</label>
+		</td>
+		<td>
+		
+		<@RegionSelect province_id="${member.province_id!''}" city_id="${member.city_id!''}" region_id="${member.region_id!''}"/>
+		 
+		</td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">地址：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.address" value="${member.address!''}" style="width: 150px" />
+		</td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">QQ：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.qq" id="qq" value="${member.qq!''}" style="width: 70px" /></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">Msn：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" name="member.msn" id="msn" value="${member.msn!''}" style="width: 70px" /></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">安全问题：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" id="pw_question" name="member.pw_question" value="${member.pw_question!''}"	style="width: 150px" /></td>
+	</tr>
+	<tr>
+		<td class="label" style="text-align: right"><label class="text">回答：</label>
+		</td>
+		<td valign="middle">&nbsp; <input type="text" id="pw_answer" name="member.pw_answer" value="${member.pw_answer!''}" style="width: 150px" /></td>
+	</tr>
+</table>
+</div>
+
+<div class="submitlist" align="center">
+<table>
+	<tr>
+		<td><input name="button" type="button" value=" 确    定   " class="submitBtn" id="editMemberBtn"/></td>
+	</tr>
+</table>
+</div>
+
+</form>
+<script type="text/javascript"> 
+$(function(){
+	$("form.validate").validate();
+	
+	$("#editMemberBtn").click(function(){
+		$.Loading.show('正在更新数据，请稍侯...');
+		var that =this;
+		var options = {
+			url : "member!saveEditMember.do?ajax=yes",
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {	
+				$.Loading.hide();
+				if(result.result==0){
+					alert(result.message);
+					MemberDetail.showEdit();
+				}else{
+					alert(result.message);
+				}
+			},
+			error : function(e) {
+				$.Loading.hide();
+				alert("出现错误 ，请重试");
+			}
+		};
+		$('#editMemberForm').ajaxSubmit(options);
+		
+	});
+});
+</script>
+</div>
+

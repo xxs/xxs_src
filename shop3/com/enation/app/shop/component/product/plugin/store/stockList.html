@@ -1,0 +1,68 @@
+<style>
+#store_box li{padding-left:5px;height:30px;line-height:30px;border-bottom:1px solid #ccc;float:left;}
+.depot{width:150px;}
+.store{width:250px;}
+.left_line{border-left:1px solid #ccc}
+</style>
+<div id="stock_box" class="grid">
+
+<table >
+<thead>
+	<th class="depot">仓库</th>
+	<th class="store">进货量</th>
+</thead>
+
+<tbody>
+<#list storeList as store>
+<tr>
+	<td class="depot">
+		<input type="hidden" name="storeid" value="${store.storeid!'0'}"  disabled="true" />
+		<input type="hidden" name="depotid" value="${store.depotid!'0'}"  disabled="true" />
+		${store.name}
+	</td>
+	
+	<td class="store left_line">
+		<input  type="text" size="8" name="store"  store="${store.store}" value="0" disabled="true"  isrequired="true"  dataType="int"/>
+		<input type="button" value="进货" class="stockbtn" />
+	</td>
+</tr>
+</#list>
+</tbody>
+</table>
+</div>
+<script>
+$(function(){
+	
+	$("#stock_box .stockbtn").click(function(){
+		
+		var self = $(this);
+		var storeInput = self.parents("tr").find("input").not("[type=button]");
+		var value = self.val();
+		if("进货" ==  value){
+			storeInput.attr("disabled",false);
+			self.val("取消");
+		}else{
+			storeInput.attr("disabled",true);
+			self.val("进货");
+		}
+		
+	});
+	
+	$("#stock_box input[name=store]").change(function(){
+		
+		var self = $(this);
+		var value  = self.val();
+		
+		if(value==""){ alert("请输入出货量") ; return false; }
+		
+		if( parseInt( value )<=0  ){
+			alert("进货量必须大于0");
+			return false;
+		}
+		
+	});
+	
+	
+	
+})
+</script>

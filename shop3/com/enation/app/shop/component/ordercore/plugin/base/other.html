@@ -1,0 +1,31 @@
+<div class="division">
+    <table cellspacing="0" cellpadding="0" borderer="0">
+      
+      <tbody><tr>
+        <th style="width: 80px;">配送方式：</th>
+        <td>${order.shipping_type }</td>
+      </tr>
+      <tr>
+        <th style="width: 80px;">配送保价：</th>
+        <td>
+        <#if order.is_protect==1>是
+        <#else>
+      		  否
+        </#if>
+		</td>
+      </tr>
+      <tr>
+        <th style="width: 80px;">商品重量：</th>
+        <td>${order.weight } g</td>
+      </tr>
+      <tr>
+        <th style="width: 80px;">支付方式：</th>
+        <td>${order.payment_name }</td>
+      </tr>
+
+     <tr>
+        <th style="width: 80px;">可得积分：</th>
+        <td>${order.gainedpoint }</td>
+      </tr>
+    </tbody></table>
+</div>

@@ -1,0 +1,108 @@
+        <div class="division">
+        <table cellspacing="0" cellpadding="0" border="0">
+          
+          <tbody><tr>
+            <th style="width: 80px;">收货日期：</th>
+            <td  style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+            <span id="ship_day_span">
+            ${order.ship_day!'' }
+            </span>
+ 
+        
+        	 <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+	          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+	          >
+	         <@permssion actid="customer_service,order"> 
+		        <a href="javascript:;" id="editship_dayBtn" style="font-size:12px">修改</a>
+	         </@permssion>
+	         </#if>
+        
+        
+            </td>
+          </tr>
+          
+          <tr>
+            <th style="width: 80px;">姓名：</th>
+            <td style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+            <span id="ship_name_span">
+            ${order.ship_name!'' }
+            </span>
+            <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+	          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+	         >
+	         <@permssion actid="customer_service,order"> 
+       			 <a href="javascript:;" id="editship_nameBtn" style="font-size:12px">修改</a>
+	         </@permssion>
+	         </#if>
+            </td>
+          </tr>
+          <tr>
+            <th style="width: 80px;">电话：</th>
+            <td style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+            <span id="ship_tel_span">
+            ${order.ship_tel!''}
+            </span>
+          <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+	          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+	         >
+	         <@permssion actid="customer_service,order">
+       		 <a href="javascript:;" id="editship_telBtn" style="font-size:12px">修改</a>
+      		</@permssion>
+	       </#if>
+            </td>
+          </tr>
+          <tr>
+            <th style="width: 80px;">手机：</th>
+            <td style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+            <span id="ship_mobile_span">
+            ${order.ship_mobile!''}
+             </span>
+          <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+	          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+	         >
+	         <@permssion actid="customer_service,order">
+       		 <a href="javascript:;" id="editship_mobileBtn" style="font-size:12px">修改</a>
+       		</@permssion>
+	       </#if>
+    
+            </td>
+          </tr>
+          <tr>
+            <th style="width: 80px;">地区：</th>
+            <td>${order.shipping_area!''}</td>
+          </tr>
+          <tr>
+            <th style="width: 80px;">地址：</th>
+            <td  style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+            <span id="order_addrdetail_span">
+            ${order.ship_addr!''}
+            </span>
+            
+        <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+	          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+	         >
+	         <@permssion actid="customer_service,order">
+       		 <a href="javascript:;" id="editAddrBtn" style="font-size:12px">修改</a>
+       		 </@permssion>
+	     </#if>
+	     
+        </td>
+          </tr>
+          <tr>
+            <th style="width: 80px;">邮编：</th>
+            <td  style="font-size: 16px; color: rgb(255, 153, 0); font-weight: 700;">
+            <span id="ship_zip_span">
+            ${order.ship_zip!''}
+            </span>
+         <#if (  !order.isCod &&  order.status==  ORDER_NOT_PAY  )
+	          || (order.isCod && (order.status== ORDER_CONFIRM ||   order.status== ORDER_ALLOCATION ||     order.status== ORDER_ALLOCATION_YES   ) )
+	         >
+	     <@permssion actid="customer_service,order">   
+        	<a href="javascript:;" id="editship_zipBtn" style="font-size:12px">修改</a>
+        </@permssion>
+	     </#if>
+            </td>
+          </tr>
+           </tbody>
+           </table>
+ </div>

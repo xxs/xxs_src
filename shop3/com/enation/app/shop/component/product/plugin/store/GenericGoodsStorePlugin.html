@@ -1,0 +1,21 @@
+<style>
+
+#store_box li{padding-left:5px;height:30px;line-height:30px;border-bottom:1px solid #ccc;float:left;}
+.depot{width:150px;}
+.store{width:250px;}
+.left_line{border-left:1px solid #ccc}
+</style>
+<div>
+<ul>
+<li class="depot">仓库</li> <li class="store">库存</li>
+<#list storeList as store>
+	<li class="depot">
+		<input type="hidden" name="storeid" value="${store.storeid!'0'}" />
+		<input type="hidden" name="depotid" value="${store.depotid!'0'}" />
+		${store.name}
+	</li>
+	
+	<li class="store left_line"><input  type="text" size="8" name="store" value="${store.store}"  isrequired="true"  dataType="int"/></li>
+</#list>
+</ul>
+</div>
